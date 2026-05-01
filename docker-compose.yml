@@ -59,11 +59,11 @@ services:
       - 4317:4317  # otlp grpc
       - 4318:4318  # otlp http
       - 8888:8888 # monitoring
-    command: --config=/etc/otelcol/config.yaml
+    command: --config=/etc/otelcol/nconfig.yaml
     depends_on:
       - loki
       - tempo
       - mimir
       - grafana
     volumes:
-      - ./services/otelcol/config.yaml:/etc/otelcol/config.yaml
+      - ./services/otelcol/config.yaml:/etc/otelcol/nconfig.yaml
