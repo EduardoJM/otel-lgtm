@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     command: --config.file=/etc/mimir/mimir.yaml
     volumes:
-      - ./services/mimir:/etc/mimir
+      - ./services/mimir/:/etc/mimir/
 
   loki:
     image: grafana/loki:3.1.0
@@ -38,14 +38,12 @@ services:
     container_name: tempo
     command: [ "-config.file=/etc/tempo/tempo.yaml" ]
     volumes:
-      - ./services/tempo:/etc/tempo
+      - ./services/tempo/:/etc/tempo/
 
   ## Tools
   promtail:
     image: grafana/promtail:2.9.5
     container_name: promtail
-    volumes:
-      - /var/log:/var/log
     command: -config.file=/etc/promtail/config.yml
 
   otelcol:
@@ -63,4 +61,4 @@ services:
       - mimir
       - grafana
     volumes:
-      - ./services/otelcol:/etc/otelcol
+      - ./services/otelcol/:/etc/otelcol/
