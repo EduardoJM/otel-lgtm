@@ -5,10 +5,9 @@ services:
     ports:
       - 9090:9090
     restart: unless-stopped
-    command: --config.file=/etc/mimir.yaml
+    command: --config.file=/etc/mimir/mimir.yaml
     volumes:
-      - ./services/mimir/mimir.yaml:/etc/mimir.yaml
-      - ./services/mimir/alertmanager.yaml:/etc/alertmanager-fallback-config.yaml
+      - ./services/mimir:/etc/mimir/mimir.yaml
 
   loki:
     image: grafana/loki:3.1.0
@@ -29,7 +28,6 @@ services:
       - GF_SECURITY_ALLOW_EMBEDDING=false
     volumes:
       - ./services/grafana:/etc/grafana/provisioning/datasources
-      # - ./services/grafana/grafana.ini:/etc/grafana/grafana.ini
     depends_on:
       - loki
       - tempo
@@ -38,9 +36,9 @@ services:
   tempo:
     image: grafana/tempo:2.5.0
     container_name: tempo
-    command: [ "-config.file=/etc/tempo.yaml" ]
+    command: [ "-config.file=/etc/tempo/tempo.yaml" ]
     volumes:
-      - ./services/tempo/tempo.yaml:/etc/tempo.yaml
+      - ./services/tempo:/etc/tempo
 
   ## Tools
   promtail:
@@ -58,11 +56,11 @@ services:
       - 4317:4317  # otlp grpc
       - 4318:4318  # otlp http
       - 8888:8888 # monitoring
-    command: --config=/etc/otelcol/nconfig.yaml
+    command: --config=/etc/otelcol/config.yaml
     depends_on:
       - loki
       - tempo
       - mimir
       - grafana
     volumes:
-      - ./services/otelcol/config.yaml:/etc/otelcol/nconfig.yaml
+      - ./services/otelcol:/etc/otelcol
