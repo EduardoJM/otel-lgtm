@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     command: --config.file=/etc/mimir/mimir.yaml
     volumes:
-      - ./services/mimir:/etc/mimir/mimir.yaml
+      - ./services/mimir:/etc/mimir
 
   loki:
     image: grafana/loki:3.1.0
