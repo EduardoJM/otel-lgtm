@@ -28,7 +28,7 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=false
       - GF_SECURITY_ALLOW_EMBEDDING=false
     volumes:
-      - ./services/grafana/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/grafana-datasources.yaml
+      - ./services/grafana:/etc/grafana/provisioning/datasources
       # - ./services/grafana/grafana.ini:/etc/grafana/grafana.ini
     depends_on:
       - loki
